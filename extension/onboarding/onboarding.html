@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=400"><title>anti-impulse-buyer - Setup</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f8f9fa;color:#1a1a2e;padding:24px;width:380px}
+h1{font-size:20px;margin-bottom:4px}
+p.sub{font-size:12px;color:#666;margin-bottom:20px}
+.step{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.step h2{font-size:14px;margin-bottom:8px;color:#457b9d}
+.step p{font-size:12px;line-height:1.5;color:#555}
+label{font-size:12px;font-weight:600;display:block;margin-top:8px;margin-bottom:4px;color:#333}
+input{width:100%;padding:8px 10px;border:1px solid #dee2e6;border-radius:6px;font-size:13px;outline:none}
+input:focus{border-color:#457b9d}
+.btn{width:100%;padding:12px;background:#1a1a2e;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px}
+.btn:hover{background:#16213e}
+.btn-secondary{background:#e9ecef;color:#333;margin-top:8px}
+.btn-secondary:hover{background:#dee2e6}
+.hidden{display:none}
+#status{text-align:center;font-size:13px;margin-top:12px;font-weight:600}
+</style>
+</head>
+<body>
+<h1>🧠 anti-impulse-buyer</h1>
+<p class="sub">Your wallet's guardian. Set up in 2 minutes.</p>
+
+<div id="step1" class="step">
+  <h2>Step 1: Start the Backend</h2>
+  <p>Open a terminal in the <code>anti-impulse-buyer</code> folder and run:</p>
+  <pre style="background:#1a1a2e;color:#fff;padding:10px;border-radius:6px;font-size:11px;margin:8px 0">python -m backend.main</pre>
+  <p>Or double-click <code>run_backend.bat</code> (Windows) / <code>run_backend.sh</code> (macOS/Linux).</p>
+  <button class="btn btn-secondary" onclick="checkBackend()">Check Connection</button>
+  <div id="backend-status" style="font-size:12px;margin-top:8px"></div>
+</div>
+
+<div id="step2" class="step">
+  <h2>Step 2: Set Up Your Profile</h2>
+  <p>Enter details for personalized financial analysis. All data stays local.</p>
+  <label>Monthly Net Income ($)</label>
+  <input type="number" id="income" placeholder="e.g. 4500" />
+  <label>Monthly Average Spend ($)</label>
+  <input type="number" id="avgSpend" placeholder="e.g. 3200" />
+  <button class="btn btn-secondary" onclick="saveProfile()">Save Profile</button>
+</div>
+
+<div id="step3" class="step">
+  <h2>Step 3: Add Essential Items</h2>
+  <p>Items that should skip impulse checks (groceries, bills, medicine).</p>
+  <label>Item Name</label>
+  <input type="text" id="essentialName" placeholder="e.g. Milk" />
+  <label>Category</label>
+  <input type="text" id="essentialCategory" placeholder="e.g. groceries" />
+  <button class="btn btn-secondary" onclick="addEssential()">Add Item</button>
+  <div id="essentials-list" style="margin-top:8px;font-size:12px"></div>
+</div>
+
+<button class="btn" onclick="completeSetup()">🎉 Done — Start Protecting Your Wallet</button>
+<div id="status"></div>
+
+<script>
+const BACKEND = "http://localhost:7432";
+
+async function checkBackend() {
+  const el = document.getElementById("backend-status");
+  try {
+    const r = await fetch(`${BACKEND}/api/health`);
+    if (r.ok) el.innerHTML = '<span style="color:#2ecc71">✅ Backend connected!</span>';
+    else el.innerHTML = '<span style="color:#e74c3c">❌ Backend returned error</span>';
+  } catch {
+    el.innerHTML = '<span style="color:#e74c3c">❌ Backend unreachable. Make sure it\'s running on port 7432.</span>';
+  }
+}
+
+async function saveProfile() {
+  const income = document.getElementById("income").value;
+  const avgSpend = document.getElementById("avgSpend").value;
+  const payload = {};
+  if (income) payload.monthly_income = parseFloat(income);
+  if (avgSpend) payload.monthly_avg_spend = parseFloat(avgSpend);
+
+  try {
+    const r = await fetch(`${BACKEND}/api/profile`, {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload),
+    });
+    if (r.ok) document.getElementById("status").innerHTML = '<span style="color:#2ecc71">✅ Profile saved!</span>';
+  } catch {
+    document.getElementById("status").innerHTML = '<span style="color:#e74c3c">❌ Failed to save</span>';
+  }
+}
+
+async function addEssential() {
+  const name = document.getElementById("essentialName").value;
+  const category = document.getElementById("essentialCategory").value;
+  if (!name) return;
+
+  try {
+    const r = await fetch(`${BACKEND}/api/essentials`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({name, category}),
+    });
+    if (r.ok) {
+      document.getElementById("essentialName").value = "";
+      document.getElementById("essentialCategory").value = "";
+      loadEssentials();
+    }
+  } catch {}
+}
+
+async function loadEssentials() {
+  try {
+    const r = await fetch(`${BACKEND}/api/essentials`);
+    if (r.ok) {
+      const items = await r.json();
+      const el = document.getElementById("essentials-list");
+      el.innerHTML = items.map(i => `<div style="padding:4px 0">• ${i.name} ${i.category ? '('+i.category+')' : ''}</div>`).join("");
+    }
+  } catch {}
+}
+
+function completeSetup() {
+  document.getElementById("status").innerHTML = '<span style="color:#2ecc71">✅ Setup complete! You can now close this tab.</span>';
+  // Save to extension storage
+  chrome.storage?.local?.set({onboarding_complete: true});
+}
+
+loadEssentials();
+</script>
+</body>
+</html>

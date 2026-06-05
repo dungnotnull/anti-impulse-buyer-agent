@@ -1,0 +1,277 @@
+{
+  "_meta": {
+    "description": "Checkout button DOM selectors for supported e-commerce sites",
+    "version": "0.1.0",
+    "last_updated": "2026-06-03"
+  },
+  "profiles": [
+    {
+      "site": "Amazon",
+      "domain_patterns": ["*.amazon.com", "*.amazon.co.uk", "*.amazon.de", "*.amazon.fr", "*.amazon.it", "*.amazon.es", "*.amazon.ca", "*.amazon.co.jp", "*.amazon.in", "*.amazon.com.au", "*.amazon.com.mx", "*.amazon.nl", "*.amazon.se", "*.amazon.sg", "*.amazon.ae", "*.amazon.sa", "*.amazon.pl"],
+      "buy_button_selectors": [
+        "#buy-now-button",
+        "input[name='submit.buy-now']",
+        "span#submit-buy-now-announced input",
+        "input[aria-labelledby='buy-now-button']",
+        "#buyNowButton",
+        "span[data-action='buy-now']"
+      ],
+      "add_to_cart_selectors": [
+        "#add-to-cart-button",
+        "input#add-to-cart-button",
+        "#addtocart_button",
+        "span[data-action='add-to-cart']"
+      ],
+      "product_name_selectors": [
+        "#productTitle",
+        "span#productTitle",
+        "h1.a-size-large span#productTitle",
+        "[data-feature-name='product-title']"
+      ],
+      "price_selectors": [
+        ".a-price span.a-offscreen",
+        "span.a-price-whole",
+        "#priceblock_ourprice",
+        "#priceblock_dealprice",
+        ".a-price .a-price-whole"
+      ],
+      "checkout_url_pattern": ["/buy/", "/checkout/", "/gp/buy/", "/gp/cart/"]
+    },
+    {
+      "site": "eBay",
+      "domain_patterns": ["*.ebay.com", "*.ebay.co.uk", "*.ebay.de", "*.ebay.fr", "*.ebay.it", "*.ebay.es", "*.ebay.ca", "*.ebay.com.au"],
+      "buy_button_selectors": [
+        "#binBtn_btn",
+        "a#binBtn_btn",
+        ".bin-btn",
+        "a[data-testid='x-buy-now']",
+        "span[data-testid='x-buy-now']",
+        ".x-buy-now__button",
+        "a[href*='bin=']"
+      ],
+      "add_to_cart_selectors": [
+        "#atcBtn_btn",
+        "a#atcBtn_btn",
+        "a[data-testid='x-add-to-cart']",
+        ".atc-btn"
+      ],
+      "product_name_selectors": [
+        "h1[data-testid='item-title']",
+        "h1#itemTitle",
+        ".it-ttl",
+        "[data-testid='x-item-title']"
+      ],
+      "price_selectors": [
+        ".x-price-primary span",
+        "#prcIsum",
+        "span[itemprop='price']",
+        "[data-testid='x-price']"
+      ],
+      "checkout_url_pattern": ["/pay?", "/checkout/", "/commit/"]
+    },
+    {
+      "site": "Shopee",
+      "domain_patterns": ["*.shopee.sg", "*.shopee.com.my", "*.shopee.co.th", "*.shopee.ph", "*.shopee.co.id", "*.shopee.vn", "*.shopee.tw", "*.shopee.com.br"],
+      "buy_button_selectors": [
+        ".btn-solid-primary.btn-buy-now",
+        "button[data-testid='btnBuy']",
+        "button.shopee-button-solid--primary",
+        ".stardust-button.btn-buy-now"
+      ],
+      "add_to_cart_selectors": [
+        ".btn-solid-primary.btn-add-to-cart",
+        "button[data-testid='btnAddToCart']",
+        ".stardust-button.btn-add-to-cart"
+      ],
+      "product_name_selectors": [
+        "div[data-testid='product-name']",
+        ".product-detail-header__product-name",
+        "span[data-testid='product-name']"
+      ],
+      "price_selectors": [
+        "div[data-testid='product-price']",
+        ".product-detail-header__price",
+        ".product-price"
+      ],
+      "checkout_url_pattern": ["/checkout/", "/cart/checkout/"]
+    },
+    {
+      "site": "Lazada",
+      "domain_patterns": ["*.lazada.sg", "*.lazada.com.my", "*.lazada.co.th", "*.lazada.ph", "*.lazada.co.id", "*.lazada.vn", "*.lazada.com.tw"],
+      "buy_button_selectors": [
+        ".pdp-button.pdp-button-type-solid.pdp-button-size-lg",
+        "button.buy-now",
+        "button[data-spm='buynow']",
+        ".buy-now-btn"
+      ],
+      "add_to_cart_selectors": [
+        ".pdp-button.pdp-button-type-secondary.pdp-button-size-lg",
+        "button.add-to-cart",
+        "button[data-spm='addcart']"
+      ],
+      "product_name_selectors": [
+        ".pdp-product-title",
+        "h1[data-spm='pdpproducttitle']",
+        ".pdp-mod-product-badge-title"
+      ],
+      "price_selectors": [
+        ".pdp-price",
+        ".pdp-product-price span",
+        ".pdp-mod-product-price"
+      ],
+      "checkout_url_pattern": ["/checkout/", "/cart/checkout/"]
+    },
+    {
+      "site": "Temu",
+      "domain_patterns": ["*.temu.com", "temu.com"],
+      "buy_button_selectors": [
+        ".buy-now-btn",
+        ".pdp-buy-btn",
+        "button[data-testid='buyNowBtn']",
+        "._2HGixpBtn"
+      ],
+      "add_to_cart_selectors": [
+        ".add-cart-btn",
+        "button[data-testid='addCartBtn']",
+        "._3gKJ9Btn"
+      ],
+      "product_name_selectors": [
+        ".pdp-title-text",
+        ".product-title",
+        "h1[data-testid='pdp-title']"
+      ],
+      "price_selectors": [
+        ".pdp-price-current",
+        ".product-price-current",
+        "[data-testid='pdp-price']"
+      ],
+      "checkout_url_pattern": ["/checkout/", "/order/"]
+    },
+    {
+      "site": "Shein",
+      "domain_patterns": ["*.shein.com", "*.shein.com.hk", "shein.com", "shein.com.hk"],
+      "buy_button_selectors": [
+        ".buy-now-btn",
+        "a.buy-now",
+        ".product-buy-btn",
+        "button#buy-now"
+      ],
+      "add_to_cart_selectors": [
+        ".add-cart-btn",
+        "a.add-to-bag",
+        ".product-add-btn",
+        "button#add-to-bag"
+      ],
+      "product_name_selectors": [
+        ".product-name",
+        "h1.product-title",
+        "[data-testid='product-name']"
+      ],
+      "price_selectors": [
+        ".product-price-current",
+        ".product-price span",
+        "[data-testid='product-price']"
+      ],
+      "checkout_url_pattern": ["/checkout/", "/order/"]
+    },
+    {
+      "site": "Zalando",
+      "domain_patterns": ["*.zalando.com", "*.zalando.*", "zalando.com", "zalando.*"],
+      "buy_button_selectors": [
+        ".buy-button",
+        ".pdp-buy-button",
+        "button[data-testid='buy-button']"
+      ],
+      "add_to_cart_selectors": [
+        ".add-to-cart-button",
+        "button[data-testid='add-to-cart-button']"
+      ],
+      "product_name_selectors": [
+        "h1[data-testid='pdp-product-name']",
+        ".catalog-article-number",
+        ".pdp-title"
+      ],
+      "price_selectors": [
+        "[data-testid='pdp-price']",
+        ".pdp-price",
+        ".product-price"
+      ],
+      "checkout_url_pattern": ["/checkout/", "/cart/"]
+    },
+    {
+      "site": "Walmart",
+      "domain_patterns": ["*.walmart.com", "walmart.com"],
+      "buy_button_selectors": [
+        "button[data-testid='buy-now']",
+        ".buy-now-button",
+        "button.prod-BuyNow"
+      ],
+      "add_to_cart_selectors": [
+        "button[data-testid='add-to-cart']",
+        ".add-to-cart-button",
+        "button.prod-addtocart"
+      ],
+      "product_name_selectors": [
+        "h1[itemprop='name']",
+        "[data-testid='product-title']",
+        ".prod-ProductTitle"
+      ],
+      "price_selectors": [
+        "[data-testid='price']",
+        "span[itemprop='price']",
+        ".prod-price"
+      ],
+      "checkout_url_pattern": ["/checkout/", "/cart/"]
+    },
+    {
+      "site": "Target",
+      "domain_patterns": ["*.target.com", "target.com"],
+      "buy_button_selectors": [
+        "button[data-test='fulfillment-addToCartBtn']",
+        ".buy-now-button",
+        "button[data-test='shipItBtn']"
+      ],
+      "add_to_cart_selectors": [
+        "button[data-test='addToCart']",
+        ".add-to-cart-btn",
+        "button[data-test='fulfillment-addToCartBtn']"
+      ],
+      "product_name_selectors": [
+        "[data-test='product-title']",
+        "h1[data-test='product-title']",
+        ".product-title"
+      ],
+      "price_selectors": [
+        "[data-test='product-price']",
+        ".price-value",
+        "[data-test='current-price']"
+      ],
+      "checkout_url_pattern": ["/checkout/", "/cart/"]
+    },
+    {
+      "site": "Etsy",
+      "domain_patterns": ["*.etsy.com", "etsy.com"],
+      "buy_button_selectors": [
+        "button[data-buy-btn]",
+        ".buy-button",
+        "button.wt-btn--filled-primary"
+      ],
+      "add_to_cart_selectors": [
+        "button[data-add-to-cart-btn]",
+        ".add-to-cart-button",
+        "button.wt-btn--outline-primary"
+      ],
+      "product_name_selectors": [
+        "h1[data-listing-title]",
+        ".wt-text-display-01",
+        "[data-appears-component='listing_title']"
+      ],
+      "price_selectors": [
+        ".wt-text-title-03",
+        "[data-buy-box-price]",
+        ".price"
+      ],
+      "checkout_url_pattern": ["/checkout/", "/cart/"]
+    }
+  ]
+}

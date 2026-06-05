@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 backend/ --max-line-length=120 --ignore=E203,W503
+
+  build-popup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Build popup
+        run: |
+          cd extension/popup
+          npm ci
+          npx vite build
+
+  knowledge-crawl:
+    if: github.event_name == 'schedule' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    schedule:
+      - cron: "0 2 * * 1"  # Every Monday 02:00 UTC
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Run knowledge crawler
+        run: python scripts/knowledge_crawler.py
+      - name: Commit updates
+        run: |
+          git config --global user.email "bot@anti-impulse-buyer.local"
+          git config --global user.name "Knowledge Bot"
+          git add SECOND-KNOWLEDGE-BRAIN.md
+          git diff --staged --quiet || git commit -m "Auto-update knowledge base [skip ci]"
+          git push

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>anti-impulse-buyer</title>
+  <link rel="stylesheet" href="overlay.css" />
+</head>
+<body>
+  <div id="root">
+    <div id="aib-header">
+      <span id="aib-title">🧠 anti-impulse-buyer</span>
+      <span id="aib-timer">05:00</span>
+    </div>
+
+    <div id="aib-narrative"></div>
+
+    <div id="aib-score-section">
+      <div id="aib-score-label">Impulsivity Score</div>
+      <div id="aib-score-bar">
+        <div id="aib-score-fill"></div>
+      </div>
+      <div id="aib-score-value"></div>
+    </div>
+
+    <div id="aib-challenge-section">
+      <div id="aib-challenge-question"></div>
+      <div id="aib-challenge-input-row">
+        <input type="text" id="aib-challenge-input" placeholder="Your answer..." />
+        <button id="aib-challenge-submit">Check</button>
+      </div>
+      <div id="aib-challenge-feedback"></div>
+    </div>
+
+    <div id="aib-actions">
+      <button id="aib-proceed-btn" disabled>✅ Proceed to Checkout</button>
+      <button id="aib-wishlist-btn">📋 Add to Wish List</button>
+    </div>
+  </div>
+
+  <script src="overlay.js"></script>
+</body>
+</html>
